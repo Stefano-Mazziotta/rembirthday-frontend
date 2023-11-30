@@ -1,0 +1,8 @@
+<body>
+  <h1>Celebrants</h1>
+  <ul>
+    @for (celebrant of celebrants; track celebrant.id) {
+    <li>{{ celebrant.birthday }}</li>
+    } @empty { Empty list of users }
+  </ul>
+</body>

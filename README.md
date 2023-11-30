@@ -1,27 +1,52 @@
-# RembirthdayFrontend
+# REMBIRTHDAY
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
+Birthday Reminder
+Angular frontend application that interacts with a Laravel API to display upcoming birthdays in an agenda format.
+Inspired by the need for a simple birthday reminder.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- View upcoming birthdays.
+- Data retrieved from Laravel backend API.
+- Responsive design for a seamless user experience.
 
-## Code scaffolding
+## Getting Started
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+These instructions will help you set up and run the project on your local machine.
 
-## Build
+### Prerequisites
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Node.js and npm installed
+- Angular CLI installed (`npm install -g @angular/cli`)
 
-## Running unit tests
+### Installation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Clone the repository:
 
-## Running end-to-end tests
+   ```bash
+   git clone https://github.com/your-username/birthday-reminder-app.git
+   ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. Install dependencies:
 
-## Further help
+   ```bash
+   npm install
+   ```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Running the Application
+
+Run the development server:
+
+```bash
+   ng serve
+```
+
+Visit http://localhost:4200 in your browser to view the application.
+
+### Running tests
+
+Execute the unit tests:
+
+```bash
+    ng test
+```

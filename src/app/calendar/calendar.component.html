@@ -1,36 +1,28 @@
-<!-- <body>
-  <h1>Celebrants</h1>
-  <ul>
-    @for (celebrant of celebrants; track celebrant.id) {
-    <li>{{ celebrant.birthday }}</li>
-    } @empty { Empty list of users }
-  </ul>
+<main>
+  <h2>{{ today }}</h2>
 
-  <div>
-    <h2>Current Month</h2>
-  </div>
-</body> -->
-
-<div>
-  <h2>Current Month</h2>
-  <p>{{ today }}</p>
-  <table>
-    <tr>
-      <th>Mo</th>
-      <th>Tu</th>
-      <th>We</th>
-      <th>Th</th>
-      <th>Fr</th>
-      <th>Sa</th>
-      <th>Su</th>
-    </tr>
-
+  <section class="calendar">
+    <div>Mo</div>
+    <div>Tu</div>
+    <div>We</div>
+    <div>Th</div>
+    <div>Fr</div>
+    <div>Sa</div>
+    <div>Su</div>
     @for (date of currentMonth.dates; track date.getDay()){
-    <tr>
+    <div>
       <h1>
         {{ date.getDate() }}-{{ date.getMonth() + 1 }}-{{ date.getFullYear() }}
       </h1>
-    </tr>
+    </div>
     }
-  </table>
-</div>
+  </section>
+</main>
+
+<!-- @for (date of currentMonth.dates; track date.getDay()){
+  <tr>
+    <h1>
+      {{ date.getDate() }}-{{ date.getMonth() + 1 }}-{{ date.getFullYear() }}
+    </h1>
+  </tr>
+  } -->

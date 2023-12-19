@@ -1,0 +1,25 @@
+main {
+  text-align: center;
+}
+
+h2 {
+  color: #333;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.calendar div {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.2em;
+  margin: 5px 0;
+}

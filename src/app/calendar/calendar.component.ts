@@ -1,12 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarService } from './services/calendar.service';
 
-type currentMonth = {
+interface month {
   name: string;
   number: number;
   year: number;
   dates: Date[];
-};
+}
+
+interface ICalendarComponent {
+  today: Date;
+  weekDays: string[];
+  grid: number[];
+  currentMonth: month;
+  celebrants: any;
+  //getDaysInMonth(year: number, month: number): number;
+}
 
 @Component({
   selector: 'app-calendar',
@@ -15,36 +24,46 @@ type currentMonth = {
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, ICalendarComponent {
   celebrants: any[] = [];
 
   today: Date = new Date();
-  currentMonth: currentMonth = {
+  currentMonth: month = {
     name: '',
     number: 0,
     year: 0,
     dates: [],
   };
 
-  futureDates: Date[] = [];
+  weekDays: string[] = [
+    'Sunday',
+    'Monday',
+    'Thuesday',
+    'Wedsneday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+
+  grid: number[] = [];
+
+  // futureDates: Date[] = [];
 
   constructor(private _calendarService: CalendarService) {}
 
   ngOnInit(): void {
-    const { currentMonth, today } = this;
+    const { today } = this;
 
-    currentMonth.name = today.toLocaleString('default', { month: 'long' });
-    currentMonth.number = today.getMonth() + 1; // getMonth -> 0 - 11 ... 0 = january...
-    currentMonth.year = today.getFullYear();
-    currentMonth.dates = this.getMonthDates(
-      currentMonth.year,
-      currentMonth.number
-    );
-
-    this.futureDates = this.getFutureDates();
+    this.currentMonth = this.setCurrentMonth();
+    // this.futureDates = this.getFutureDates();
 
     // console.log(this.futureDates);
-    console.log(currentMonth);
+    console.log(this.currentMonth);
+
+    // this.grid
+    for (let index = 0; index < this.weekDays.length * 5; index++) {
+      this.grid.push(index);
+    }
 
     this._calendarService.getCelebrants().subscribe({
       next: (response) => {
@@ -59,17 +78,38 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  private getFutureDates(): Date[] {
-    const futureDates: Date[] = [];
+  private setCurrentMonth(): month {
+    const { today } = this;
 
-    for (let i = 1; i <= 30; i++) {
-      const nextDate = new Date(this.today);
-      nextDate.setDate(this.today.getDate() + i);
-      futureDates.push(nextDate);
-    }
+    const currentYear: number = today.getFullYear();
+    const currentMonthNumber: number = today.getMonth() + 1; // getMonth -> 0 - 11 ... 0 = january...
+    const currentMonthName: string = today.toLocaleString('default', {
+      month: 'long',
+    });
 
-    return futureDates;
+    const currentDates = this.getMonthDates(currentYear, currentMonthNumber);
+
+    const currentMonth: month = {
+      name: currentMonthName,
+      number: currentMonthNumber,
+      year: currentYear,
+      dates: currentDates,
+    };
+
+    return currentMonth;
   }
+
+  // private getFutureDates(): Date[] {
+  //   const futureDates: Date[] = [];
+
+  //   for (let i = 1; i <= 30; i++) {
+  //     const nextDate = new Date(this.today);
+  //     nextDate.setDate(this.today.getDate() + i);
+  //     futureDates.push(nextDate);
+  //   }
+
+  //   return futureDates;
+  // }
 
   private getMonthDates(year: number, month: number): Date[] {
     const monthDates: Date[] = [];

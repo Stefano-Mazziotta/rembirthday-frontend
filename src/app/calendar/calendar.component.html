@@ -2,27 +2,19 @@
   <h2>{{ today }}</h2>
 
   <section class="calendar">
-    <div>Mo</div>
-    <div>Tu</div>
-    <div>We</div>
-    <div>Th</div>
-    <div>Fr</div>
-    <div>Sa</div>
-    <div>Su</div>
-    @for (date of currentMonth.dates; track date.getDay()){
+    @for (day of weekDays; track $index){
+    <div>{{ day }}</div>
+    } @for (square of grid; track $index){
+    <div>{{ square }}</div>
+    }
+    <!-- @for (weekDays) -->
+
+    <!-- @for (date of currentMonth.dates; track date.getDay()){
     <div>
       <h1>
         {{ date.getDate() }}-{{ date.getMonth() + 1 }}-{{ date.getFullYear() }}
       </h1>
     </div>
-    }
+    } -->
   </section>
 </main>
-
-<!-- @for (date of currentMonth.dates; track date.getDay()){
-  <tr>
-    <h1>
-      {{ date.getDate() }}-{{ date.getMonth() + 1 }}-{{ date.getFullYear() }}
-    </h1>
-  </tr>
-  } -->

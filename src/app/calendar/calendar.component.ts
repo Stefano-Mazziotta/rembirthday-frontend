@@ -11,7 +11,7 @@ interface month {
 interface ICalendarComponent {
   today: Date;
   weekDays: string[];
-  grid: number[];
+  grid: Date[];
   currentMonth: month;
   celebrants: any;
   //getDaysInMonth(year: number, month: number): number;
@@ -39,31 +39,25 @@ export class CalendarComponent implements OnInit, ICalendarComponent {
     'Sunday',
     'Monday',
     'Thuesday',
-    'Wedsneday',
+    'Wednesday',
     'Thursday',
     'Friday',
     'Saturday',
   ];
 
-  grid: number[] = [];
-
-  // futureDates: Date[] = [];
+  grid: Date[] = [];
 
   constructor(private _calendarService: CalendarService) {}
 
   ngOnInit(): void {
     const { today } = this;
 
-    this.currentMonth = this.setCurrentMonth();
-    // this.futureDates = this.getFutureDates();
+    this.currentMonth = this.initCurrentMonth(today);
+    this.grid = this.initGrid(today);
 
     // console.log(this.futureDates);
     console.log(this.currentMonth);
-
-    // this.grid
-    for (let index = 0; index < this.weekDays.length * 5; index++) {
-      this.grid.push(index);
-    }
+    // this.grid = this.currentMonth.dates.slice();
 
     this._calendarService.getCelebrants().subscribe({
       next: (response) => {
@@ -78,14 +72,10 @@ export class CalendarComponent implements OnInit, ICalendarComponent {
     });
   }
 
-  private setCurrentMonth(): month {
-    const { today } = this;
-
-    const currentYear: number = today.getFullYear();
-    const currentMonthNumber: number = today.getMonth() + 1; // getMonth -> 0 - 11 ... 0 = january...
-    const currentMonthName: string = today.toLocaleString('default', {
-      month: 'long',
-    });
+  private initCurrentMonth(today: Date): month {
+    const currentYear: number = this.getYear(today);
+    const currentMonthNumber: number = this.getMonthNumber(today);
+    const currentMonthName: string = this.getMonthName(today);
 
     const currentDates = this.getMonthDates(currentYear, currentMonthNumber);
 
@@ -97,6 +87,92 @@ export class CalendarComponent implements OnInit, ICalendarComponent {
     };
 
     return currentMonth;
+  }
+
+  // private getMonthDates(year: number, month: number): (Date | null)[] {
+  //   const monthDates: (Date | null)[] = [];
+  //   const firstDayOfMonth = new Date(year, month - 1, 1); // Adjust month index
+
+  //   // Get the starting day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+  //   const startingDayOfWeek = firstDayOfMonth.getDay();
+
+  //   // Offset to start from the correct weekday column in the calendar grid
+  //   for (let i = 0; i < startingDayOfWeek; i++) {
+  //     monthDates.push(null); // You can use null or any other value to represent empty cells
+  //   }
+
+  //   const daysInCurrentMonth: number = this.getDaysInMonth(year, month);
+
+  //   for (let index = 1; index <= daysInCurrentMonth; index++) {
+  //     const date = new Date(year, month - 1, index); // Adjust month index
+  //     monthDates.push(date);
+  //   }
+
+  //   return monthDates;
+  // }
+
+  private initGrid(today: Date): Date[] {
+    const previousDates: Date[] = [];
+    const futuresDates: Date[] = [];
+
+    let grid: Date[] = [];
+
+    const currentYear = this.getYear(today);
+    const currentMonth = this.getMonthNumber(today);
+
+    // previous dates
+    const firstDateOfMonth = new Date(currentYear, currentMonth - 1, 1); // Adjust month index
+    const startingDayOfWeek = firstDateOfMonth.getDay(); // (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+
+    // Offset to start from the correct weekday column in the calendar grid
+    for (let i = startingDayOfWeek; i > 0; i--) {
+      const pastDate = new Date(firstDateOfMonth);
+      pastDate.setDate(firstDateOfMonth.getDate() - i);
+
+      previousDates.push(pastDate);
+    }
+
+    // futures dates
+    const daysInCurrentMonth: number = this.getDaysInMonth(
+      currentYear,
+      currentMonth
+    );
+    const lastDateOfMonth = new Date(
+      currentYear,
+      currentMonth - 1,
+      daysInCurrentMonth
+    );
+    const lastDayOfWeek = lastDateOfMonth.getDay();
+    let dayCounter = lastDayOfWeek;
+
+    // Offset to start from the correct weekday column in the calendar grid
+    for (let i = 1; dayCounter < 6; i++) {
+      const futureDate = new Date(lastDateOfMonth);
+      futureDate.setDate(lastDateOfMonth.getDate() + i);
+
+      futuresDates.push(futureDate);
+      dayCounter++;
+    }
+
+    grid = grid.concat(previousDates, this.currentMonth.dates, futuresDates);
+    return grid;
+  }
+
+  private getYear(date: Date): number {
+    return date.getFullYear();
+  }
+
+  private getMonthNumber(date: Date): number {
+    const monthNumber = date.getMonth() + 1; // getMonth -> 0 - 11 ... 0 = january...
+    return monthNumber;
+  }
+
+  private getMonthName(date: Date): string {
+    const monthName = date.toLocaleString('default', {
+      month: 'long',
+    });
+
+    return monthName;
   }
 
   // private getFutureDates(): Date[] {

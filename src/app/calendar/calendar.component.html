@@ -4,17 +4,8 @@
   <section class="calendar">
     @for (day of weekDays; track $index){
     <div>{{ day }}</div>
-    } @for (item of grid; track $index){
-    <div>{{ item }}</div>
+    } @for (date of dates; track $index){
+    <date [date]="date" />
     }
-    <!-- @for (weekDays) -->
-
-    <!-- @for (date of currentMonth.dates; track date.getDay()){
-    <div>
-      <h1>
-        {{ date.getDate() }}-{{ date.getMonth() + 1 }}-{{ date.getFullYear() }}
-      </h1>
-    </div>
-    } -->
   </section>
 </main>

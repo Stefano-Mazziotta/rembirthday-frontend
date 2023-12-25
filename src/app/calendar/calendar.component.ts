@@ -46,6 +46,8 @@ export class CalendarComponent implements OnInit, ICalendarComponent {
   ];
   dates: Date[] = [];
 
+  isOpenCreateDialog: boolean = false;
+
   constructor(private _calendarService: CalendarService) {}
 
   ngOnInit(): void {
@@ -67,6 +69,11 @@ export class CalendarComponent implements OnInit, ICalendarComponent {
         console.error(error);
       },
     });
+  }
+
+  public setStatusDialog() {
+    const { isOpenCreateDialog } = this;
+    this.isOpenCreateDialog = !isOpenCreateDialog;
   }
 
   private initCurrentMonth(today: Date): month {

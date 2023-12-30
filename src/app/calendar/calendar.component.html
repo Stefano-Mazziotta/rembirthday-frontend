@@ -10,14 +10,15 @@
 <main class="content-wrap">
   <header class="header">
     <h1 class="title">REMBIRTHDAY</h1>
-    <h2 class="title">{{ today.toLocaleDateString("en-GB") }}</h2>
-    <button class="btn" (click)="setStatusDialog()">+</button>
+    <!-- <h2 class="title">{{ today.toLocaleDateString("en-GB") }}</h2> -->
+    <h2 class="title">{{ month.name }} {{ month.year }}</h2>
+    <button class="btn" (click)="setStatusDialog()">Add celebrant</button>
   </header>
 
   <section class="calendar">
     @for (day of weekDays; track $index){
     <div>{{ day }}</div>
-    } @for (date of dates; track $index){
+    } @for (date of month.calendar; track $index){
     <date [date]="date" />
     }
   </section>

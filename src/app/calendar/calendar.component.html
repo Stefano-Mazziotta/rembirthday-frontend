@@ -11,15 +11,35 @@
   <header class="header">
     <h1 class="title">REMBIRTHDAY</h1>
     <!-- <h2 class="title">{{ today.toLocaleDateString("en-GB") }}</h2> -->
-    <h2 class="title">{{ month.name }} {{ month.year }}</h2>
-    <button class="btn" (click)="setStatusDialog()">Add celebrant</button>
+    <select name="month" id="">
+      @for (monthOption of monthsOptions; track $index) {
+      <option [selected]="month.name == monthOption" [value]="monthOption">
+        {{ monthOption }}
+      </option>
+      }
+    </select>
+    <select name="" id="" [value]="month.year">
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+    </select>
+
+    <button>Today</button>
+
+    <div class="pagination">
+      <button>-</button>
+      <button>+</button>
+    </div>
   </header>
 
   <section class="calendar">
     @for (day of weekDays; track $index){
-    <div>{{ day }}</div>
+    <div>
+      <strong>{{ day }}</strong>
+    </div>
     } @for (date of month.calendar; track $index){
     <date [date]="date" />
     }
   </section>
+  <button class="btn" (click)="setStatusDialog()">Add celebrant</button>
 </main>

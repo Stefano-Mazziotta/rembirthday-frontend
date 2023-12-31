@@ -1,22 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarService } from './services/calendar.service';
 import { DateComponent } from './components/date/date.component';
-
-interface month {
-  name: string;
-  number: number;
-  year: number;
-  dates: Date[];
-  calendar: Date[];
-}
-
-interface ICalendarComponent {
-  today: Date;
-  weekDays: string[];
-  month: month;
-  celebrants: any;
-  //getDaysInMonth(year: number, month: number): number;
-}
+import { MONTHS, WEEK_DAYS } from '../../shared/AppConstants';
+import { Month } from '../../shared/interfaces/month';
 
 @Component({
   selector: 'app-calendar',
@@ -25,11 +11,14 @@ interface ICalendarComponent {
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
-export class CalendarComponent implements OnInit, ICalendarComponent {
-  celebrants: any[] = [];
+export class CalendarComponent implements OnInit, CalendarComponent {
+  weekDays: string[] = WEEK_DAYS;
+  monthsOptions: string[] = MONTHS;
+
+  isOpenCreateDialog: boolean = false;
 
   today: Date = new Date();
-  month: month = {
+  month: Month = {
     name: '',
     number: 0,
     year: 0,
@@ -37,17 +26,7 @@ export class CalendarComponent implements OnInit, ICalendarComponent {
     calendar: [],
   };
 
-  weekDays: string[] = [
-    'Sunday',
-    'Monday',
-    'Thuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
-
-  isOpenCreateDialog: boolean = false;
+  celebrants: any[] = [];
 
   constructor(private _calendarService: CalendarService) {}
 
@@ -77,14 +56,14 @@ export class CalendarComponent implements OnInit, ICalendarComponent {
     this.isOpenCreateDialog = !isOpenCreateDialog;
   }
 
-  private initMonth(date: Date): month {
+  private initMonth(date: Date): Month {
     const year: number = this._calendarService.getYear(date);
     const monthNumber: number = this._calendarService.getMonthNumber(date);
     const monthName: string = this._calendarService.getMonthName(date);
 
     const monthDates = this._calendarService.getMonthDates(year, monthNumber);
 
-    const month: month = {
+    const month: Month = {
       name: monthName,
       number: monthNumber,
       year: year,

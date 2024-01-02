@@ -1,9 +1,10 @@
-import { Month } from './month';
+import { CelebrantDto } from './CelebrantDto';
+import { Month } from './Month';
 
 export interface CalendarComponent {
   today: Date;
   weekDays: string[];
   month: Month;
-  celebrants: any;
+  celebrants: CelebrantDto;
   //getDaysInMonth(year: number, month: number): number;
 }

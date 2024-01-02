@@ -1,18 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Month } from '../../../shared/interfaces/Month';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarService {
-  private apiURl: string = 'http://localhost:8000/api';
-
-  constructor(private http: HttpClient) {}
-
-  public getCelebrants(): Observable<any> {
-    return this.http.get(`${this.apiURl}/celebrant`);
-  } // move to celebrant service
+  constructor() {}
 
   public getMonthDates(year: number, month: number): Date[] {
     const monthDates: Date[] = [];
@@ -91,5 +86,22 @@ export class CalendarService {
     nextMonth.setMonth(date.getMonth() + 1);
 
     return nextMonth;
+  }
+  public getCalendarDates(date: Date, month: Month): Date[] {
+    let calendarDates: Date[] = [];
+
+    const year = this.getYear(date);
+    const monthNumber = this.getMonthNumber(date);
+
+    const previousDates: Date[] = this.getPreviousDates(year, monthNumber);
+    const futureDates: Date[] = this.getFutureDates(year, monthNumber);
+
+    calendarDates = calendarDates.concat(
+      previousDates,
+      month.dates,
+      futureDates
+    );
+
+    return calendarDates;
   }
 }

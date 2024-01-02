@@ -3,6 +3,9 @@ import { CalendarService } from './services/calendar.service';
 import { DateComponent } from './components/date/date.component';
 import { MONTHS, WEEK_DAYS } from '../../shared/AppConstants';
 import { Month } from '../../shared/interfaces/Month';
+import { CelebrantDto } from '../../shared/interfaces/CelebrantDto';
+import { CalendarDate } from '../../shared/interfaces/CalendarDates';
+import { CelebrantService } from '../celebrant/services/celebrant.service';
 
 @Component({
   selector: 'app-calendar',
@@ -26,23 +29,26 @@ export class CalendarComponent implements OnInit, CalendarComponent {
     calendar: [],
   };
 
-  celebrants: any[] = [];
+  celebrants: CelebrantDto[] = [];
 
-  constructor(private _calendarService: CalendarService) {}
+  constructor(
+    private _calendarService: CalendarService,
+    private _celebrantService: CelebrantService
+  ) {}
 
   ngOnInit(): void {
     const { today } = this;
 
     this.month = this.initMonth(today);
-    this.month.calendar = this.initCalendar(today);
 
     console.log(this.month);
 
-    this._calendarService.getCelebrants().subscribe({
+    this._celebrantService.getCelebrants().subscribe({
       next: (response) => {
         const { message, success, data } = response;
         if (success) {
           this.celebrants = data;
+          this.month.calendar = this.initCalendar(today);
         }
       },
       error: (error) => {
@@ -101,22 +107,23 @@ export class CalendarComponent implements OnInit, CalendarComponent {
 
     return month;
   }
-  private initCalendar(date: Date): Date[] {
-    let calendar: Date[] = [];
+  private initCalendar(date: Date): CalendarDate[] {
+    const calendar: CalendarDate[] = [];
 
-    const year = this._calendarService.getYear(date);
-    const month = this._calendarService.getMonthNumber(date);
-
-    const previousDates: Date[] = this._calendarService.getPreviousDates(
-      year,
-      month
-    );
-    const futureDates: Date[] = this._calendarService.getFutureDates(
-      year,
-      month
+    const calendarDates = this._calendarService.getCalendarDates(
+      date,
+      this.month
     );
 
-    calendar = calendar.concat(previousDates, this.month.dates, futureDates);
+    for (const date of calendarDates) {
+      const celebrantsByDate = this._celebrantService.getCelebrantsByDate(
+        date,
+        this.celebrants
+      );
+
+      calendar.push({ date, celebrants: celebrantsByDate });
+    }
+
     return calendar;
   }
 }

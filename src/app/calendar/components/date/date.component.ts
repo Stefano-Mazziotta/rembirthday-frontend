@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { CelebrantDto } from '../../../../shared/interfaces/CelebrantDto';
 
 @Component({
   selector: 'date',
@@ -9,6 +10,7 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 })
 export class DateComponent implements OnInit, OnChanges {
   @Input() date!: Date;
+  @Input() celebrants: CelebrantDto[] = [];
   formatedDate: string = '';
 
   constructor() {}
@@ -16,6 +18,7 @@ export class DateComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     const { date } = this;
     this.formatedDate = this.getFormatedDate(date);
+    console.log(this.celebrants);
   }
 
   ngOnChanges(): void {

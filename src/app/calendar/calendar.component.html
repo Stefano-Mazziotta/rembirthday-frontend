@@ -37,8 +37,8 @@
     <div>
       <strong>{{ day }}</strong>
     </div>
-    } @for (date of month.calendar; track $index){
-    <date [date]="date" />
+    } @for (calendarDate of month.calendar; track $index){
+    <date [date]="calendarDate.date" [celebrants]="calendarDate.celebrants" />
     }
   </section>
   <button class="btn" (click)="setStatusDialog()">Add celebrant</button>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarService } from './services/calendar.service';
 import { DateComponent } from './components/date/date.component';
 import { MONTHS, WEEK_DAYS } from '../../shared/AppConstants';
-import { Month } from '../../shared/interfaces/month';
+import { Month } from '../../shared/interfaces/Month';
 
 @Component({
   selector: 'app-calendar',
@@ -56,6 +56,34 @@ export class CalendarComponent implements OnInit, CalendarComponent {
     this.isOpenCreateDialog = !isOpenCreateDialog;
   }
 
+  public previousMonth(): void {
+    const { month } = this;
+
+    const FIRST_DATE = 0;
+    const firstDate = month.dates[FIRST_DATE];
+
+    const previousMonth = this._calendarService.getPreviousMonth(firstDate);
+
+    this.month = this.initMonth(previousMonth);
+    this.month.calendar = this.initCalendar(previousMonth);
+  }
+  public nextMonth(): void {
+    const { month } = this;
+
+    const FIRST_DATE = 0;
+    const firstDate = month.dates[FIRST_DATE];
+
+    const nextMonth = this._calendarService.getNextMonth(firstDate);
+
+    this.month = this.initMonth(nextMonth);
+    this.month.calendar = this.initCalendar(nextMonth);
+  }
+  public resetToday(): void {
+    const { today } = this;
+    this.month = this.initMonth(today);
+    this.month.calendar = this.initCalendar(today);
+  }
+
   private initMonth(date: Date): Month {
     const year: number = this._calendarService.getYear(date);
     const monthNumber: number = this._calendarService.getMonthNumber(date);
@@ -73,20 +101,19 @@ export class CalendarComponent implements OnInit, CalendarComponent {
 
     return month;
   }
-
-  private initCalendar(today: Date): Date[] {
+  private initCalendar(date: Date): Date[] {
     let calendar: Date[] = [];
 
-    const currentYear = this._calendarService.getYear(today);
-    const currentMonth = this._calendarService.getMonthNumber(today);
+    const year = this._calendarService.getYear(date);
+    const month = this._calendarService.getMonthNumber(date);
 
     const previousDates: Date[] = this._calendarService.getPreviousDates(
-      currentYear,
-      currentMonth
+      year,
+      month
     );
     const futureDates: Date[] = this._calendarService.getFutureDates(
-      currentYear,
-      currentMonth
+      year,
+      month
     );
 
     calendar = calendar.concat(previousDates, this.month.dates, futureDates);

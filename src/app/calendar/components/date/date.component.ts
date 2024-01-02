@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
   selector: 'date',
@@ -7,13 +7,18 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './date.component.html',
   styleUrl: './date.component.css',
 })
-export class DateComponent implements OnInit {
+export class DateComponent implements OnInit, OnChanges {
   @Input() date!: Date;
   formatedDate: string = '';
 
   constructor() {}
 
   ngOnInit(): void {
+    const { date } = this;
+    this.formatedDate = this.getFormatedDate(date);
+  }
+
+  ngOnChanges(): void {
     const { date } = this;
     this.formatedDate = this.getFormatedDate(date);
   }

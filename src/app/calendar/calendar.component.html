@@ -24,11 +24,11 @@
       <option value="2024">2024</option>
     </select>
 
-    <button>Today</button>
+    <button class="btn" (click)="resetToday()">Today</button>
 
     <div class="pagination">
-      <button>-</button>
-      <button>+</button>
+      <button class="btn" (click)="previousMonth()">-</button>
+      <button class="btn margin-left-10" (click)="nextMonth()">+</button>
     </div>
   </header>
 

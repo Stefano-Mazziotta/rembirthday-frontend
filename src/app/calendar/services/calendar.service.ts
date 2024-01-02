@@ -80,4 +80,16 @@ export class CalendarService {
 
     return futureDates;
   }
+  public getPreviousMonth(date: Date) {
+    const previousMonth = new Date(date);
+    previousMonth.setMonth(date.getMonth() - 1);
+
+    return previousMonth;
+  }
+  public getNextMonth(date: Date) {
+    const nextMonth = new Date(date);
+    nextMonth.setMonth(date.getMonth() + 1);
+
+    return nextMonth;
+  }
 }

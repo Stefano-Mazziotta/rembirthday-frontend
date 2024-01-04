@@ -1,4 +1,8 @@
 <div class="item">
   <p>{{ formatedDate }}</p>
-  <p>celebrants:{{ celebrants.length }}</p>
+  <div style="display: flex; align-items: center; justify-content: center">
+    @for (celebrant of celebrants; track $index) {
+    <celebrant [celebrant]="celebrant" />
+    }
+  </div>
 </div>

@@ -1,10 +1,11 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { CelebrantDto } from '../../../../shared/interfaces/CelebrantDto';
+import { CelebrantComponent } from '../celebrant/celebrant.component';
 
 @Component({
   selector: 'date',
   standalone: true,
-  imports: [],
+  imports: [CelebrantComponent],
   templateUrl: './date.component.html',
   styleUrl: './date.component.css',
 })

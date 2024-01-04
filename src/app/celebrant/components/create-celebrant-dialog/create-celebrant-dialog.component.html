@@ -1,1 +1,41 @@
-<p>create-celebrant-dialog works!</p>
+@if (isVisible) {
+<div class="overlay">
+  <section class="dialog">
+    <header>
+      <h2>Create Celebrant</h2>
+      <button (click)="closeDialog()">x</button>
+    </header>
+
+    <form [formGroup]="celebrantForm" (submit)="createCelebrantSubmit()">
+      <div class="input-container">
+        <label for="name">First Name</label>
+        <input id="name" name="name" type="text" formControlName="name" />
+      </div>
+
+      <div class="input-container">
+        <label for="surname">Surname</label>
+        <input
+          id="surname"
+          name="surname"
+          type="text"
+          formControlName="surname"
+        />
+      </div>
+
+      <div class="input-container">
+        <label for="birthdate">Birthdate</label>
+        <input
+          id="birthdate"
+          name="birthdate"
+          type="date"
+          formControlName="birthdate"
+        />
+      </div>
+      <!-- <select name="relationship">
+        <option value="friend">Friend</option>
+      </select> -->
+      <button type="submit">Create</button>
+    </form>
+  </section>
+</div>
+}

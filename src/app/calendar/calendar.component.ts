@@ -6,11 +6,12 @@ import { Month } from '../../shared/interfaces/Month';
 import { CelebrantDto } from '../../shared/interfaces/CelebrantDto';
 import { CalendarDate } from '../../shared/interfaces/CalendarDates';
 import { CelebrantService } from '../celebrant/services/celebrant.service';
+import { CreateCelebrantDialogComponent } from '../celebrant/components/create-celebrant-dialog/create-celebrant-dialog.component';
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [DateComponent],
+  imports: [DateComponent, CreateCelebrantDialogComponent],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
@@ -18,7 +19,7 @@ export class CalendarComponent implements OnInit, CalendarComponent {
   weekDays: string[] = WEEK_DAYS;
   monthsOptions: string[] = MONTHS;
 
-  isOpenCreateDialog: boolean = false;
+  isCreateDialogVisible: boolean = false;
 
   today: Date = new Date();
   month: Month = {
@@ -57,9 +58,8 @@ export class CalendarComponent implements OnInit, CalendarComponent {
     });
   }
 
-  public setStatusDialog() {
-    const { isOpenCreateDialog } = this;
-    this.isOpenCreateDialog = !isOpenCreateDialog;
+  public openCreateCelebrantDialog() {
+    this.isCreateDialogVisible = true;
   }
 
   public previousMonth(): void {

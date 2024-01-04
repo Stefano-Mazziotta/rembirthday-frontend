@@ -1,12 +1,3 @@
-@if(isOpenCreateDialog ){
-<div class="overlay">
-  <div class="dialog">
-    <p>dialog</p>
-  </div>
-</div>
-
-}
-
 <main class="content-wrap">
   <header class="header">
     <h1 class="title">REMBIRTHDAY</h1>
@@ -41,5 +32,11 @@
     <date [date]="calendarDate.date" [celebrants]="calendarDate.celebrants" />
     }
   </section>
-  <button class="btn" (click)="setStatusDialog()">Add celebrant</button>
+  <button class="btn" (click)="openCreateCelebrantDialog()">
+    Add celebrant
+  </button>
 </main>
+<create-celebrant-dialog
+  (onClose)="isCreateDialogVisible = false"
+  [isVisible]="isCreateDialogVisible"
+/>

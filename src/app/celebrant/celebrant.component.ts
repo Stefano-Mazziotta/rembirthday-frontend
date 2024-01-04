@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CelebrantDto } from '../../../../shared/interfaces/CelebrantDto';
+import { CelebrantDto } from '../../shared/interfaces/CelebrantDto';
 
 @Component({
   selector: 'celebrant',

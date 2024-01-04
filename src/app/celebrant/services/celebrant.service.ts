@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CelebrantDto } from '../../../shared/interfaces/CelebrantDto';
+import {
+  CelebrantDto,
+  CreateCelebrantDto,
+} from '../../../shared/interfaces/CelebrantDto';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +15,7 @@ export class CelebrantService {
   constructor(private http: HttpClient) {}
 
   public getCelebrants(): Observable<any> {
-    return this.http.get(`${this.celebrantApiURL}`);
+    return this.http.get<any>(`${this.celebrantApiURL}`);
   }
 
   public getCelebrantsByDate(
@@ -32,5 +35,9 @@ export class CelebrantService {
     });
 
     return celebrantsByDate;
+  }
+
+  public createCelebrant(celebrant: CreateCelebrantDto): Observable<any> {
+    return this.http.post(this.celebrantApiURL, celebrant);
   }
 }

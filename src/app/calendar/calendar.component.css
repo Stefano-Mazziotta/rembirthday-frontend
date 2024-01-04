@@ -81,27 +81,6 @@ h1 {
   margin: 5px 0;
 }
 
-/* create dialog */
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.overlay .dialog {
-  width: 600px;
-  background-color: white;
-  min-height: 600px;
-}
-
 @media (min-width: 768px) {
   .btn {
     padding: 16px 32px;

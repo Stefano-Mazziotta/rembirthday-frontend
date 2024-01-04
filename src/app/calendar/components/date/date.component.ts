@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { CelebrantDto } from '../../../../shared/interfaces/CelebrantDto';
-import { CelebrantComponent } from '../celebrant/celebrant.component';
+import { CelebrantComponent } from '../../../celebrant/celebrant.component';
 
 @Component({
   selector: 'date',

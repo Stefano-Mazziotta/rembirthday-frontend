@@ -17,7 +17,7 @@
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
-  background-color: rgba(38, 109, 182);
+  background-color: rgba(38, 109, 182, 0.8);
   color: #fff;
   text-align: center;
   border-radius: 6px;
